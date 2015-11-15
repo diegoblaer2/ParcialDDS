@@ -18,13 +18,12 @@ class Taxi {
 
 	
 	def void AceptarViaje(Viaje viaje){
-		RepoTaxis.ObtenerInstancia().TaxiAceptaViaje(this, viaje)
+		viaje.TaxiAceptaViaje(this)
 		Ocupar() 
 	}
 	
 	def void RechazarViaje(Viaje viaje){
-		RepoTaxis.ObtenerInstancia().TaxiRechazaViaje(this, viaje)
-		//no rechazo el viaje todavia porque pueden haber otros taxis que acepten
+		viaje.TaxiRechazaViaje(this)
 	}	
 	
 	def void CancelarViaje(Viaje viaje){

@@ -44,12 +44,12 @@ class Tests {
 		viaje = new Viaje(celularCliente, canning, obelisco)		
 	}
 	
+	
 	@Test
 	def void usuarioSolicitaTaxiYSeEnviaMensajeAlTaxi() {
 		val mock = mock(typeof(EnviadorSMS))
-	    RepoTaxis.ObtenerInstancia.enviador = mock
 	    viaje.enviador = mock
-	    RepoTaxis.ObtenerInstancia.ViajeSolicitado(viaje)
+	    viaje.SolicitarTaxi()
 	    verify(mock, times(1)).NuevoViaje(taxi1.celular, viaje)
 	    		
 	}
@@ -58,9 +58,8 @@ class Tests {
 	@Test
 	def void elTaxiAceptaElViaje() {
 		val mock = mock(typeof(EnviadorSMS))
-	    RepoTaxis.ObtenerInstancia.enviador = mock
 	    viaje.enviador = mock
-	    RepoTaxis.ObtenerInstancia.ViajeSolicitado(viaje)
+	    viaje.SolicitarTaxi()
 	    taxi1.AceptarViaje(viaje)
 	    
 	    verify(mock, times(1)).NuevoViaje(taxi1.celular, viaje)
@@ -71,9 +70,8 @@ class Tests {
 	@Test
 	def void seSolicitaUnViajeYRechazanTodos() {
 		val mock = mock(typeof(EnviadorSMS))
-	    RepoTaxis.ObtenerInstancia.enviador = mock
 	    viaje.enviador = mock
-	    RepoTaxis.ObtenerInstancia.ViajeSolicitado(viaje)
+	    viaje.SolicitarTaxi()
 	    taxi1.RechazarViaje(viaje)
 	    taxi2.RechazarViaje(viaje)
 	     

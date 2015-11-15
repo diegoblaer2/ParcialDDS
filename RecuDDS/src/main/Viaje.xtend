@@ -1,6 +1,8 @@
 package main
 
 import org.eclipse.xtend.lib.annotations.Accessors
+import java.util.List
+import java.util.ArrayList
 
 @Accessors
 class Viaje {
@@ -11,7 +13,7 @@ class Viaje {
 	Ubicacion destino
 	String celularCliente
 	EnviadorSMS enviador;
-	
+	List<Taxi> taxisDisponibles = new ArrayList();
 	
 	new(String contacto, Ubicacion ori, Ubicacion dest){
 		taxi = null;
@@ -21,16 +23,29 @@ class Viaje {
 		destino = dest
 		celularCliente = contacto
 		estado = new Solicitado()
+		taxisDisponibles = RepoTaxis.ObtenerInstancia.BuscarTaxisDisponibles(origen)
 	}
 
-	def void Aceptar(Taxi taxiQueAcepto){
+	def SolicitarTaxi(){		
+		if(taxisDisponibles.size == 0)
+			estado.Rechazar(this)
+		else
+			enviador.NuevoViaje(taxisDisponibles.head.celular, this)
+			
+	}
+
+	def void TaxiAceptaViaje(Taxi taxiQueAcepto){
+		System.out.println("aceptado")		
+		enviador.ViajeAceptado(celularCliente)
 		taxi = taxiQueAcepto
 		estado.Aceptar(this);
 	}
 	
-	def void Rechazar(){
-		estado.Rechazar(this);
+	def void TaxiRechazaViaje(Taxi taxi){
+		taxisDisponibles.remove(taxi)
+		SolicitarTaxi()
 	}
+	
 	def void Finalizar(){
 		estado.Finalizar(this);	
 	}
