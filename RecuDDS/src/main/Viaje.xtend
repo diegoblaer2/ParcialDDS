@@ -27,9 +27,10 @@ class Viaje {
 	}
 
 	def SolicitarTaxi(){		
-		if(taxisDisponibles.size == 0)
+		if(taxisDisponibles.size == 0){
+			enviador.ViajeRechazado(celularCliente)
 			estado.Rechazar(this)
-		else
+		}else
 			enviador.NuevoViaje(taxisDisponibles.head.celular, this)
 			
 	}
