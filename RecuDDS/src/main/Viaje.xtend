@@ -36,8 +36,6 @@ class Viaje {
 	}
 
 	def void TaxiAceptaViaje(Taxi taxiQueAcepto){
-		System.out.println("aceptado")		
-		enviador.ViajeAceptado(celularCliente)
 		taxi = taxiQueAcepto
 		estado.Aceptar(this);
 	}
