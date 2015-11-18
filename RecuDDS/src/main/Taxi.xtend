@@ -8,6 +8,7 @@ class Taxi {
 	boolean actualizado
 	Ubicacion ubicacion
 	String celular
+	EnviadorSMS enviador
 	
 	new(String celular, Ubicacion ubicacion){
 		ocupado = false;
@@ -18,15 +19,18 @@ class Taxi {
 
 	
 	def void AceptarViaje(Viaje viaje){
+		enviador.ViajeAceptado(viaje.celularCliente)
 		viaje.TaxiAceptaViaje(this)
 		Ocupar() 
 	}
 	
 	def void RechazarViaje(Viaje viaje){
+		//aca no le envio ningun sms porque este taxi pudo haber rechazado pero otro lo acepto
 		viaje.TaxiRechazaViaje(this)
 	}	
 	
 	def void CancelarViaje(Viaje viaje){
+		enviador.ViajeCancelado(viaje.celularCliente)
 		viaje.CancelarDebidoAlTaxi()
 		Desocupar()
 	}
